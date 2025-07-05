@@ -13,6 +13,9 @@ func main() {
 	e := echo.New()
 
 	// routing
+	e.GET("/", func(c echo.Context) error {
+    	return c.String(http.StatusOK, "Hello from Lambda root!")
+	})
 	e.GET("/hello", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello from Lambda + Echo!")
 	})
