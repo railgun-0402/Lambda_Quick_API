@@ -1,0 +1,63 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'go-lambda
+
+  Sample SAM Template for go-lambda
+
+  '
+Globals:
+  Function:
+    Timeout: 5
+    MemorySize: 128
+Resources:
+  UserTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: UserTable
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+      - AttributeName: id
+        AttributeType: S
+      KeySchema:
+      - AttributeName: id
+        KeyType: HASH
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: go1.x
+      SamResourceId: HelloWorldFunction
+    Properties:
+      CodeUri: HelloWorldFunction
+      Handler: bootstrap
+      Runtime: provided.al2
+      Architectures:
+      - x86_64
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
+      Environment:
+        Variables:
+          TABLE_NAME: UserTable
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName: UserTable
+Outputs:
+  HelloWorldAPI:
+    Description: API Gateway endpoint URL for Prod environment for First Function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/
+  HelloWorldFunction:
+    Description: First Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - HelloWorldFunction
+      - Arn
+  HelloWorldFunctionIamRole:
+    Description: Implicit IAM Role created for Hello World function
+    Value:
+      Fn::GetAtt:
+      - HelloWorldFunctionRole
+      - Arn
