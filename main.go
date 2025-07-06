@@ -14,5 +14,11 @@ func main() {
 	// // Echo to Lambda
 	// adapter := echoadapter.New(e)
 	// lambda.Start(adapter.ProxyWithContext)
-	PutItem()
+	
+	
+	// PutItem()
+	// GetItem()
+	// Update()
+	Delete()
+
 }
