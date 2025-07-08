@@ -10,6 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 )
 
+// TODOこちらのコードを使用する
 type TableItem struct {
 	ID string `dynamodbav:"id"`
 	Name string `dynamodbav:"name"`
