@@ -1,6 +1,6 @@
-package main
+package domain
 
-type TableItem struct {
+type User struct {
 	ID string `dynamodbav:"id"`
 	Name string `dynamodbav:"name"`
 }
